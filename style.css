@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FAF3E0;
+    color: #4A1C1C;
+}
+
+header {
+    background: #800000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header input, header select {
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #800000;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+}
+
+header input {
+    width: 50%;
+}
+
+header select {
+    width: 20%;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.paper {
+    background: white;
+    margin: 15px auto;
+    padding: 20px;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    border-left: 6px solid #800000;
+}
+
+.paper h2 {
+    color: #800000;
+}
+
+.paper p {
+    margin: 5px 0;
+}
+
+.paper a {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #800000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.paper a:hover {
+    background: #660000;
+}
+
+#pagination {
+    margin: 20px 0;
+}
+
+#pagination button {
+    padding: 10px 15px;
+    background: #800000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#pagination button:hover {
+    background: #660000;
+}
