@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Repository</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -12,9 +12,23 @@
         <input type="text" id="search" placeholder="Search research papers..." onkeyup="searchPapers()">
         <select id="sdgFilter" onchange="filterBySDG()">
             <option value="">Filter by SDG</option>
+            <option value="1">1 - No Poverty</option>
+            <option value="2">2 - Zero Hunger</option>
             <option value="3">3 - Good Health and Well-being</option>
-            <option value="9">9 - Industry, Innovation, and Infrastructure</option>
+            <option value="4">4 - Quality Education</option>
+            <option value="5">5 - Gender Equality</option>
+            <option value="6">6 - Clean Water and Sanitation</option>
+            <option value="7">7 - Affordable and Clean Energy</option>
+            <option value="8">8 - Decent Work and Economic Growth</option>
+            <option value="9">9 - Industry, Innovation and Infrastructure</option>
+            <option value="10">10 - Reduced Inequalities</option>
+            <option value="11">11 - Sustainable Cities and Communities</option>
+            <option value="12">12 - Responsible Consumption and Production</option>
             <option value="13">13 - Climate Action</option>
+            <option value="14">14 - Life Below Water</option>
+            <option value="15">15 - Life on Land</option>
+            <option value="16">16 - Peace, Justice and Strong Institutions</option>
+            <option value="17">17 - Partnerships for the Goals</option>
         </select>
         <br>
         <label for="yearFrom">Year From:</label>
@@ -56,47 +70,6 @@
             <button id="next">Next</button>
         </div>
     </main>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const yearTo = document.getElementById("yearTo");
-            yearTo.value = new Date().getFullYear();
-            yearTo.max = new Date().getFullYear();
-        });
-
-        function searchPapers() {
-            let input = document.getElementById('search').value.toLowerCase();
-            let papers = document.querySelectorAll('.paper');
-            papers.forEach(paper => {
-                let title = paper.getAttribute('data-title').toLowerCase();
-                let author = paper.getAttribute('data-author').toLowerCase();
-                let match = title.includes(input) || author.includes(input);
-                paper.style.display = match ? 'block' : 'none';
-            });
-            filterByYear();
-        }
-
-        function filterBySDG() {
-            let selectedSDG = document.getElementById('sdgFilter').value;
-            let papers = document.querySelectorAll('.paper');
-            papers.forEach(paper => {
-                let sdg = paper.getAttribute('data-sdg');
-                paper.style.display = (selectedSDG === "" || sdg === selectedSDG) ? 'block' : 'none';
-            });
-            filterByYear();
-        }
-
-        function filterByYear() {
-            let from = parseInt(document.getElementById('yearFrom').value);
-            let to = parseInt(document.getElementById('yearTo').value);
-            let papers = document.querySelectorAll('.paper');
-            papers.forEach(paper => {
-                let year = parseInt(paper.getAttribute('data-date'));
-                let withinRange = (!isNaN(from) && !isNaN(to)) ? (year >= from && year <= to) : true;
-                if (paper.style.display !== "none") {
-                    paper.style.display = withinRange ? 'block' : 'none';
-                }
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
