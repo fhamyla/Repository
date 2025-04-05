@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Repository</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -12,51 +12,42 @@
         <input type="text" id="search" placeholder="Search research papers..." onkeyup="searchPapers()">
         <select id="sdgFilter" onchange="filterBySDG()">
             <option value="">Filter by SDG</option>
-            <option value="1">1 - No Poverty</option>
-            <option value="2">2 - Zero Hunger</option>
             <option value="3">3 - Good Health and Well-being</option>
-            <option value="4">4 - Quality Education</option>
-            <option value="5">5 - Gender Equality</option>
-            <option value="6">6 - Clean Water and Sanitation</option>
-            <option value="7">7 - Affordable and Clean Energy</option>
-            <option value="8">8 - Decent Work and Economic Growth</option>
-            <option value="9">9 - Industry, Innovation and Infrastructure</option>
-            <option value="10">10 - Reduced Inequalities</option>
-            <option value="11">11 - Sustainable Cities and Communities</option>
-            <option value="12">12 - Responsible Consumption and Production</option>
+            <option value="9">9 - Industry, Innovation, and Infrastructure</option>
             <option value="13">13 - Climate Action</option>
-            <option value="14">14 - Life Below Water</option>
-            <option value="15">15 - Life on Land</option>
-            <option value="16">16 - Peace, Justice and Strong Institutions</option>
-            <option value="17">17 - Partnerships for the Goals</option>
         </select>
+        <br>
+        <label for="yearFrom">Year From:</label>
+        <input type="number" id="yearFrom" min="2000" value="2000" onchange="filterByYear()">
+        <label for="yearTo">Year To:</label>
+        <input type="number" id="yearTo" min="2000" value="" onchange="filterByYear()">
     </header>
     <main>
         <section id="results">
             <!-- Sample Research Papers -->
             <div class="paper" data-title="AI in Healthcare" data-author="John Doe" data-date="2023" data-sdg="3" data-sdg-title="Good Health and Well-being">
                 <h2>AI in Healthcare</h2>
-                <p><strong>Author:</strong> J Doe</p>
+                <p><strong>Author:</strong> John Doe</p>
                 <p><strong>Year:</strong> 2023</p>
                 <p><strong>SDG:</strong> 3 - Good Health and Well-being</p>
                 <p>An analysis of artificial intelligence applications in modern healthcare.</p>
-                <a href="#">Abstract</a>
+                <a href="#">Download</a>
             </div>
             <div class="paper" data-title="Cybersecurity Trends" data-author="Jane Smith" data-date="2022" data-sdg="9" data-sdg-title="Industry, Innovation, and Infrastructure">
                 <h2>Cybersecurity Trends</h2>
-                <p><strong>Author:</strong> J Smith</p>
+                <p><strong>Author:</strong> Jane Smith</p>
                 <p><strong>Year:</strong> 2022</p>
                 <p><strong>SDG:</strong> 9 - Industry, Innovation, and Infrastructure</p>
                 <p>A study on evolving threats and cybersecurity defense strategies.</p>
-                <a href="#">Abstract</a>
+                <a href="#">Download</a>
             </div>
             <div class="paper" data-title="Climate Change Impact" data-author="Alice Brown" data-date="2021" data-sdg="13" data-sdg-title="Climate Action">
                 <h2>Climate Change Impact</h2>
-                <p><strong>Author:</strong> A Brown</p>
+                <p><strong>Author:</strong> Alice Brown</p>
                 <p><strong>Year:</strong> 2021</p>
                 <p><strong>SDG:</strong> 13 - Climate Action</p>
                 <p>Examining the effects of climate change on global agriculture.</p>
-                <a href="#">Abstract</a>
+                <a href="#">Download</a>
             </div>
         </section>
         <div id="pagination">
@@ -65,6 +56,47 @@
             <button id="next">Next</button>
         </div>
     </main>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const yearTo = document.getElementById("yearTo");
+            yearTo.value = new Date().getFullYear();
+            yearTo.max = new Date().getFullYear();
+        });
+
+        function searchPapers() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let papers = document.querySelectorAll('.paper');
+            papers.forEach(paper => {
+                let title = paper.getAttribute('data-title').toLowerCase();
+                let author = paper.getAttribute('data-author').toLowerCase();
+                let match = title.includes(input) || author.includes(input);
+                paper.style.display = match ? 'block' : 'none';
+            });
+            filterByYear();
+        }
+
+        function filterBySDG() {
+            let selectedSDG = document.getElementById('sdgFilter').value;
+            let papers = document.querySelectorAll('.paper');
+            papers.forEach(paper => {
+                let sdg = paper.getAttribute('data-sdg');
+                paper.style.display = (selectedSDG === "" || sdg === selectedSDG) ? 'block' : 'none';
+            });
+            filterByYear();
+        }
+
+        function filterByYear() {
+            let from = parseInt(document.getElementById('yearFrom').value);
+            let to = parseInt(document.getElementById('yearTo').value);
+            let papers = document.querySelectorAll('.paper');
+            papers.forEach(paper => {
+                let year = parseInt(paper.getAttribute('data-date'));
+                let withinRange = (!isNaN(from) && !isNaN(to)) ? (year >= from && year <= to) : true;
+                if (paper.style.display !== "none") {
+                    paper.style.display = withinRange ? 'block' : 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
