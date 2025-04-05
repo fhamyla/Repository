@@ -3,11 +3,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const yearTo = document.getElementById("yearTo");
     const yearFrom = document.getElementById("yearFrom");
 
-    yearTo.value = currentYear;
     yearTo.max = currentYear;
-
     yearFrom.max = currentYear;
+
+    yearFrom.value = currentYear - 5;
+    yearTo.value = currentYear;
+
+    yearFrom.addEventListener("input", validateYearRange);
+    yearTo.addEventListener("input", validateYearRange);
 });
+
+function validateYearRange() {
+    const yearFrom = document.getElementById("yearFrom");
+    const yearTo = document.getElementById("yearTo");
+
+    const fromVal = parseInt(yearFrom.value);
+    const toVal = parseInt(yearTo.value);
+
+    if (fromVal > toVal) {
+        yearTo.value = fromVal;
+    }
+}
 
 function searchPapers() {
     let input = document.getElementById('search').value.toLowerCase();
