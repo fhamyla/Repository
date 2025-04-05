@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const currentYear = new Date().getFullYear();
     const yearTo = document.getElementById("yearTo");
-    yearTo.value = new Date().getFullYear();
-    yearTo.max = new Date().getFullYear();
+    const yearFrom = document.getElementById("yearFrom");
+
+    yearTo.value = currentYear;
+    yearTo.max = currentYear;
+
+    yearFrom.max = currentYear;
 });
 
 function searchPapers() {
