@@ -30,6 +30,22 @@ header select {
     width: 20%;
 }
 
+header label {
+    font-weight: bold;
+    color: white;
+    margin: 0 5px;
+}
+
+header input[type="number"] {
+    padding: 10px;
+    margin: 10px 5px;
+    border: 2px solid #800000;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    width: 120px;
+}
+
 main {
     padding: 20px;
     text-align: center;
