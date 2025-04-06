@@ -3,15 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const yearTo = document.getElementById("yearTo");
     const yearFrom = document.getElementById("yearFrom");
 
-    // Default values
     yearFrom.value = currentYear - 5;
     yearTo.value = currentYear;
 
-    // Set bounds
     yearFrom.max = currentYear;
     yearTo.max = currentYear;
 
-    // Add listeners to both inputs
     yearFrom.addEventListener("input", handleYearChange);
     yearTo.addEventListener("input", handleYearChange);
     yearFrom.addEventListener("change", handleYearChange);
@@ -25,7 +22,6 @@ function handleYearChange() {
     let fromVal = parseInt(yearFrom.value);
     let toVal = parseInt(yearTo.value);
 
-    // Adjust if range is invalid
     if (fromVal > toVal) {
         yearTo.value = fromVal;
         toVal = fromVal;
@@ -34,11 +30,9 @@ function handleYearChange() {
         fromVal = toVal;
     }
 
-    // Update constraints dynamically
     yearFrom.max = toVal;
     yearTo.min = fromVal;
 
-    // Trigger filter
     filterByYear();
 }
 
