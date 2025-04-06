@@ -50,23 +50,31 @@ function filterByYear() {
 }
 
 function searchPapers() {
-    let input = document.getElementById('search').value.toLowerCase();
-    let papers = document.querySelectorAll('.paper');
-    papers.forEach(paper => {
-        let title = paper.getAttribute('data-title').toLowerCase();
-        let author = paper.getAttribute('data-author').toLowerCase();
-        let match = title.includes(input) || author.includes(input);
-        paper.style.display = match ? 'block' : 'none';
-    });
-    filterByYear();
+    applyFilters();  // Trigger the filtering after search is typed
 }
 
 function filterBySDG() {
-    let selectedSDG = document.getElementById('sdgFilter').value;
-    let papers = document.querySelectorAll('.paper');
+    applyFilters();  // Trigger the filtering after SDG is selected
+}
+
+function applyFilters() {
+    const input = document.getElementById('search').value.toLowerCase();
+    const selectedSDG = document.getElementById('sdgFilter').value;
+    const from = parseInt(document.getElementById('yearFrom').value);
+    const to = parseInt(document.getElementById('yearTo').value);
+
+    const papers = document.querySelectorAll('.paper');
+
     papers.forEach(paper => {
-        let sdg = paper.getAttribute('data-sdg');
-        paper.style.display = (selectedSDG === "" || sdg === selectedSDG) ? 'block' : 'none';
+        const title = paper.getAttribute('data-title').toLowerCase();
+        const author = paper.getAttribute('data-author').toLowerCase();
+        const sdg = paper.getAttribute('data-sdg');
+        const year = parseInt(paper.getAttribute('data-date'));
+
+        const matchesSearch = title.includes(input) || author.includes(input);
+        const matchesSDG = selectedSDG === "" || sdg === selectedSDG;
+        const matchesYear = year >= from && year <= to;
+
+        paper.style.display = (matchesSearch && matchesSDG && matchesYear) ? 'block' : 'none';
     });
-    filterByYear();
 }
