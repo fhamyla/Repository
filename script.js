@@ -3,26 +3,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const yearTo = document.getElementById("yearTo");
     const yearFrom = document.getElementById("yearFrom");
 
-    yearTo.max = currentYear;
-    yearFrom.max = currentYear;
-
+    // Default values
     yearFrom.value = currentYear - 5;
     yearTo.value = currentYear;
 
-    yearFrom.addEventListener("input", validateYearRange);
-    yearTo.addEventListener("input", validateYearRange);
+    // Set bounds
+    yearFrom.max = currentYear;
+    yearTo.max = currentYear;
+
+    // Add listeners to both inputs
+    yearFrom.addEventListener("input", handleYearChange);
+    yearTo.addEventListener("input", handleYearChange);
+    yearFrom.addEventListener("change", handleYearChange);
+    yearTo.addEventListener("change", handleYearChange);
 });
 
-function validateYearRange() {
+function handleYearChange() {
     const yearFrom = document.getElementById("yearFrom");
     const yearTo = document.getElementById("yearTo");
 
-    const fromVal = parseInt(yearFrom.value);
-    const toVal = parseInt(yearTo.value);
+    let fromVal = parseInt(yearFrom.value);
+    let toVal = parseInt(yearTo.value);
 
+    // Adjust if range is invalid
     if (fromVal > toVal) {
         yearTo.value = fromVal;
+        toVal = fromVal;
+    } else if (toVal < fromVal) {
+        yearFrom.value = toVal;
+        fromVal = toVal;
     }
+
+    // Update constraints dynamically
+    yearFrom.max = toVal;
+    yearTo.min = fromVal;
+
+    // Trigger filter
+    filterByYear();
+}
+
+function filterByYear() {
+    const from = parseInt(document.getElementById("yearFrom").value);
+    const to = parseInt(document.getElementById("yearTo").value);
+    const papers = document.querySelectorAll(".paper");
+
+    papers.forEach(paper => {
+        const year = parseInt(paper.getAttribute("data-date"));
+        const visible = (year >= from && year <= to);
+
+        paper.style.display = visible ? 'block' : 'none';
+    });
 }
 
 function searchPapers() {
@@ -45,17 +75,4 @@ function filterBySDG() {
         paper.style.display = (selectedSDG === "" || sdg === selectedSDG) ? 'block' : 'none';
     });
     filterByYear();
-}
-
-function filterByYear() {
-    let from = parseInt(document.getElementById('yearFrom').value);
-    let to = parseInt(document.getElementById('yearTo').value);
-    let papers = document.querySelectorAll('.paper');
-    papers.forEach(paper => {
-        let year = parseInt(paper.getAttribute('data-date'));
-        let withinRange = (!isNaN(from) && !isNaN(to)) ? (year >= from && year <= to) : true;
-        if (paper.style.display !== "none") {
-            paper.style.display = withinRange ? 'block' : 'none';
-        }
-    });
 }
