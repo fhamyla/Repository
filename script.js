@@ -50,11 +50,11 @@ function filterByYear() {
 }
 
 function searchPapers() {
-    applyFilters();  // Trigger the filtering after search is typed
+    applyFilters();
 }
 
 function filterBySDG() {
-    applyFilters();  // Trigger the filtering after SDG is selected
+    applyFilters();
 }
 
 function applyFilters() {
